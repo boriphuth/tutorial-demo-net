@@ -20,10 +20,12 @@ using System.Data.Entity.Infrastructure;
 
 public partial class NorthwindEntities : DbContext
 {
+    private bool _isInitialized = false;
+
     public NorthwindEntities()
         : base("name=NorthwindEntities")
     {
-
+        Initialize();
     }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -31,6 +33,16 @@ public partial class NorthwindEntities : DbContext
         throw new UnintentionalCodeFirstException();
     }
 
+    protected internal void Initialize()
+    {
+        if (!_isInitialized)
+        {
+            _isInitialized = true;
+
+            // EF 6.0.1 throws an exception, unless we first probe the provider types.
+            var type1 = typeof(System.Data.Entity.SqlServer.SqlProviderServices);
+        }
+    }
 
     public virtual DbSet<Product> Products { get; set; }
 

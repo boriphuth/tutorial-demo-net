@@ -11,6 +11,7 @@ namespace tutorial.Tests.Controllers
         [TestMethod]
         public void GetAll()
         {
+            var bugFix = typeof(System.Data.Entity.SqlServer.SqlProviderServices).ToString();
             // Arrange
             ProductController controller = new ProductController();
 
